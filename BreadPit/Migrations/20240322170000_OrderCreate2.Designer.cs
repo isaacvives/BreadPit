@@ -3,6 +3,7 @@ using System;
 using BreadPit.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreadPit.Migrations
 {
     [DbContext(typeof(BreadPitContext))]
-    partial class BreadPitContextModelSnapshot : ModelSnapshot
+    [Migration("20240322170000_OrderCreate2")]
+    partial class OrderCreate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,18 +94,18 @@ namespace BreadPit.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("CustumerId")
                         .HasColumnType("int");
-
-                    b.Property<string>("CustomerId1")
-                        .HasColumnType("varchar(255)");
 
                     b.Property<DateTime>("OrderPlaced")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("varchar(255)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders");
                 });
@@ -284,11 +286,11 @@ namespace BreadPit.Migrations
 
             modelBuilder.Entity("BreadPit.Models.Order", b =>
                 {
-                    b.HasOne("BreadPit.Areas.Identity.Data.BreadPitUser", "Customer")
+                    b.HasOne("BreadPit.Areas.Identity.Data.BreadPitUser", "User")
                         .WithMany()
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("UserId");
 
-                    b.Navigation("Customer");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("BreadPit.Models.OrderDetail", b =>

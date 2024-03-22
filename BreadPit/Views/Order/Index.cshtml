@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model BreadPit.Models.OrderViewModel
+
+<h2>Bestel Broodjes</h2>
+
+<form asp-controller="Order" asp-action="Index" method="post">
+    <table>
+        <thead>
+            <tr>
+                <th>Broodje</th>
+                <th>Prijs</th>
+                <th>Aantal</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.Products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td><input type="number" name="OrderedItems[@product.Id]" value="0" min="0"></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button type="submit">Bestellen</button>
+</form>

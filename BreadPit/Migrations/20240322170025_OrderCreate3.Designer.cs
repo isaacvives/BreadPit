@@ -3,6 +3,7 @@ using System;
 using BreadPit.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BreadPit.Migrations
 {
     [DbContext(typeof(BreadPitContext))]
-    partial class BreadPitContextModelSnapshot : ModelSnapshot
+    [Migration("20240322170025_OrderCreate3")]
+    partial class OrderCreate3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,18 +94,18 @@ namespace BreadPit.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("CustomerId1")
+                    b.Property<string>("CustomerId")
                         .HasColumnType("varchar(255)");
+
+                    b.Property<int>("CustumerId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("OrderPlaced")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId1");
+                    b.HasIndex("CustomerId");
 
                     b.ToTable("Orders");
                 });
@@ -286,7 +288,7 @@ namespace BreadPit.Migrations
                 {
                     b.HasOne("BreadPit.Areas.Identity.Data.BreadPitUser", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId1");
+                        .HasForeignKey("CustomerId");
 
                     b.Navigation("Customer");
                 });
