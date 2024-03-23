@@ -65,6 +65,13 @@ using (var scope = app.Services.CreateScope())
         role.Name = "User";
         await _roleManager.CreateAsync(role);
     }
+    x = await _roleManager.RoleExistsAsync("PendingUser");
+    if (!x)
+    {
+        var role = new IdentityRole();
+        role.Name = "PendingUser";
+        await _roleManager.CreateAsync(role);
+    }
 }
 
 app.Run();

@@ -1,0 +1,27 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model BreadPit.Models.OrderViewModel
+
+<h1>Ordered Products</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var kvp in Model.OrderedItems)
+        {
+            <tr>
+                <td>@Model.Products.FirstOrDefault(p => p.Id == kvp.Key)?.Name</td>
+                <td>@kvp.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>

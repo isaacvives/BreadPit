@@ -2,11 +2,11 @@
 using BreadPit.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace BreadPit.Controllers
 {
-    [Authorize]
     public class OrderController : Controller
     {
         private readonly BreadPitContext _context;
@@ -18,6 +18,7 @@ namespace BreadPit.Controllers
 
 
         // GET: /Order
+        [Authorize]
         public IActionResult Index()
         {
             var products = _context.Products.ToList();
@@ -32,6 +33,7 @@ namespace BreadPit.Controllers
 
         // POST: /Order
         [HttpPost]
+        [Authorize]
         public IActionResult Index(OrderViewModel viewModel)
         {
             var order = new Order
@@ -63,6 +65,38 @@ namespace BreadPit.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        [Authorize(Roles = "Admin, Manager")]
+        public IActionResult SimpleOverview()
+        {
+            var orders = _context.Orders.Include(o => o.OrderDetails).ThenInclude(od => od.Product).ToList();
+
+            var orderedItems = new Dictionary<int, int>();
+
+            foreach (var order in orders)
+            {
+                foreach (var detail in order.OrderDetails)
+                {
+                    if (!orderedItems.ContainsKey(detail.ProductId))
+                    {
+                        orderedItems.Add(detail.ProductId, detail.Quantity);
+                    }
+                    else
+                    {
+                        orderedItems[detail.ProductId] += detail.Quantity;
+                    }
+                }
+            }
+
+            var orderViewModel = new OrderViewModel
+            {
+                Products = orderedItems.Select(kvp =>
+                    new Product { Id = kvp.Key, Name = _context.Products.Find(kvp.Key).Name }).ToList(),
+                OrderedItems = orderedItems
+            };
+
+            return View(orderViewModel);
         }
     }
 }
