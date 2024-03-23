@@ -4,6 +4,6 @@ namespace BreadPit.Models
     public class OrderViewModel
     {
         public List<Product> Products { get; set; }
-        public Dictionary<int, int> OrderedItems { get; set; } // Key: SandwichID, Value: Quantity
+        public Dictionary<int, int> OrderedItems { get; set; } // Key: ProductID, Value: Quantity
     }
 }
