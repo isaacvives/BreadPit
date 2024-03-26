@@ -8,6 +8,7 @@
 <table class="table">
     <thead>
         <tr>
+            <th>Id</th>
             <th>Gebruikersnaam</th>
             <th>Rollen</th>
             <th></th>
@@ -18,12 +19,18 @@
         @foreach (var user in Model)
         {
             <tr>
+                <td>@user.UserId</td>
                 <td>@user.Username</td>
                 <td>@string.Join(", ", user.Roles)</td>
                 <td>
                     <form asp-action="Delete" asp-route-userId="@user.UserId" method="post" onsubmit="return confirm('Weet je zeker dat je deze gebruiker wilt verwijderen?');">
                         <button type="submit" class="btn btn-danger">Verwijderen</button>
                     </form>
+
+                </td>
+                <td>
+                    <!--Hardcoded want het werkte niet xd-->
+                    <a href="/user/updaterole?userid=@user.UserId">Update Role</a>
                 </td>
             </tr>
         }
