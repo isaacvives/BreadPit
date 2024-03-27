@@ -1,0 +1,46 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model List<BreadPit.Models.OrderViewModel>
+
+<h1>Order Overview</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Product(s)</th>
+            <th>Total Price</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var orderViewModel in Model)
+        {
+            <tr>
+                <td>@orderViewModel.Users.FirstOrDefault()?.UserName</td>
+                <td>
+                    <ul>
+                        @foreach (var orderedItem in orderViewModel.OrderedItems)
+                        {
+                            <li>@orderedItem.Value x @orderViewModel.Products.FirstOrDefault(p => p.Id == orderedItem.Key)?.Name</li>
+                        }
+                    </ul>
+                </td>
+                <td>@orderViewModel.TotalPrice.ToString("C")</td>
+                <td>
+                    <a href="@Url.Action("EditOrder", new { id = orderViewModel.OrderId })">Edit</a>
+                </td>
+                <td>
+                    <form asp-action="DeleteOrder" asp-route-id="@orderViewModel.OrderId" method="post" onsubmit="return confirm('Are you sure you want to delete this order?');">
+                        <button type="submit" class="btn btn-link">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

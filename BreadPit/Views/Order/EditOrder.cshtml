@@ -1,0 +1,27 @@
+﻿@model BreadPit.Models.OrderViewModel
+
+<h1>Edit Order</h1>
+
+<form asp-action="EditOrder" method="post">
+    <input type="hidden" asp-for="OrderId" />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var orderedItem in Model.OrderedItems)
+            {
+                <tr>
+                    <td>@Model.Products.FirstOrDefault(p => p.Id == orderedItem.Key)?.Name</td>
+                    <td><input type="number" asp-for="@Model.OrderedItems[orderedItem.Key]" min="0" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <button type="submit">Update</button>
+</form>

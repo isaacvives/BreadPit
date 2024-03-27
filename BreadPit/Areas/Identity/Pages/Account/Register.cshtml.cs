@@ -126,7 +126,7 @@ namespace BreadPit.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    var defaultrole = _roleManager.FindByNameAsync("User").Result;
+                    var defaultrole = _roleManager.FindByNameAsync("PendingUser").Result;
 
                     if (defaultrole != null)
                     {

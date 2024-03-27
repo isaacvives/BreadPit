@@ -13,6 +13,17 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BreadPit</a>
+                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Order</a>
+                @if (User.IsInRole("Admin"))
+                {
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="PersonalOverviewList">Edit Order</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Edit" asp-action="Index">Edit Products</a>
+                    <a class="nav-link text-dark" asp-area="" asp-controller="User" asp-action="Index">Edit Users</a>
+                }
+                @if (User.IsInRole("Manager"))
+                {
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="SimpleOverview">View Orders</a>
+                }
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
